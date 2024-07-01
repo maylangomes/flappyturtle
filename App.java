@@ -5,16 +5,16 @@ public class App {
         int boardWidth = 543;
         int boardHeight = 640;
 
-        JFrame frame = new JFrame("Flappy Bird");
+        JFrame frame = new JFrame("Flappy Turtle");
 		frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        FlappyBird flappyBird = new FlappyBird();
-        frame.add(flappyBird);
+        FlappyTurtle flappyTurtle = new FlappyTurtle();
+        frame.add(flappyTurtle);
         frame.pack();
-        flappyBird.requestFocus();
+        flappyTurtle.requestFocus();
         frame.setVisible(true);
     }
 }

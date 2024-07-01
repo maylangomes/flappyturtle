@@ -4,28 +4,28 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-class FlappyBird extends JPanel implements ActionListener, KeyListener {
+class FlappyTurtle extends JPanel implements ActionListener, KeyListener {
     int boardWidth = 543;
     int boardHeight = 640;
 
     Image backgroundImg;
-    Image birdImg;
+    Image turtleImg;
     Image topPipeImg;
     Image bottomPipeImg;
 
-    int birdX = boardWidth / 8;
-    int birdY = boardWidth / 2;
-    int birdWidth = 34;
-    int birdHeight = 24;
+    int turtleX = boardWidth / 8;
+    int turtleY = boardWidth / 2;
+    int turtleWidth = 34;
+    int turtleHeight = 24;
 
-    class Bird {
-        int x = birdX;
-        int y = birdY;
-        int width = birdWidth;
-        int height = birdHeight;
+    class Turtle {
+        int x = turtleX;
+        int y = turtleY;
+        int width = turtleWidth;
+        int height = turtleHeight;
         Image img;
 
-        Bird(Image img) {
+        Turtle(Image img) {
             this.img = img;
         }
     }
@@ -48,7 +48,7 @@ class FlappyBird extends JPanel implements ActionListener, KeyListener {
         }
     }
 
-    Bird bird;
+    Turtle turtle;
     int velocityX = -4;
     int velocityY = 0;
     int gravity = 1;
@@ -61,17 +61,17 @@ class FlappyBird extends JPanel implements ActionListener, KeyListener {
     boolean gameOver = false;
     double score = 0;
 
-    FlappyBird() {
+    FlappyTurtle() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
         setFocusable(true);
         addKeyListener(this);
 
         backgroundImg = new ImageIcon(getClass().getResource("./ocean.png")).getImage();
-        birdImg = new ImageIcon(getClass().getResource("./turtle.png")).getImage();
+        turtleImg = new ImageIcon(getClass().getResource("./turtle.png")).getImage();
         topPipeImg = new ImageIcon(getClass().getResource("./toppipe.png")).getImage();
         bottomPipeImg = new ImageIcon(getClass().getResource("./bottompipe.png")).getImage();
 
-        bird = new Bird(birdImg);
+        turtle = new Turtle(turtleImg);
         pipes = new ArrayList<>();
 
         placePipeTimer = new Timer(1500, e -> placePipes());
@@ -102,7 +102,7 @@ class FlappyBird extends JPanel implements ActionListener, KeyListener {
     public void draw(Graphics g) {
         g.drawImage(backgroundImg, 0, 0, this.boardWidth, this.boardHeight, null);
 
-        g.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height, null);
+        g.drawImage(turtleImg, turtle.x, turtle.y, turtle.width, turtle.height, null);
 
         for (Pipe pipe : pipes) {
             g.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height, null);
@@ -126,28 +126,28 @@ class FlappyBird extends JPanel implements ActionListener, KeyListener {
 
     public void move() {
         velocityY += gravity;
-        bird.y += velocityY;
-        bird.y = Math.max(bird.y, 0);
+        turtle.y += velocityY;
+        turtle.y = Math.max(turtle.y, 0);
 
         for (Pipe pipe : pipes) {
             pipe.x += velocityX;
 
-            if (!pipe.passed && bird.x > pipe.x + pipe.width) {
+            if (!pipe.passed && turtle.x > pipe.x + pipe.width) {
                 score += 0.5;
                 pipe.passed = true;
             }
 
-            if (collision(bird, pipe)) {
+            if (collision(turtle, pipe)) {
                 gameOver = true;
             }
         }
 
-        if (bird.y > boardHeight) {
+        if (turtle.y > boardHeight) {
             gameOver = true;
         }
     }
 
-    boolean collision(Bird a, Pipe b) {
+    boolean collision(Turtle a, Pipe b) {
         return a.x < b.x + b.width &&
                 a.x + a.width > b.x &&
                 a.y < b.y + b.height &&
@@ -170,7 +170,7 @@ class FlappyBird extends JPanel implements ActionListener, KeyListener {
             velocityY = -9;
 
             if (gameOver) {
-                bird.y = birdY;
+                turtle.y = turtleY;
                 velocityY = 0;
                 pipes.clear();
                 gameOver = false;
@@ -179,9 +179,9 @@ class FlappyBird extends JPanel implements ActionListener, KeyListener {
                 placePipeTimer.start();
             }
         } else if (e.getKeyCode() == KeyEvent.VK_Q) {
-            bird.x = Math.max(0, bird.x - 10);
+            turtle.x = Math.max(0, turtle.x - 10);
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            bird.x = Math.min(boardWidth - bird.width, bird.x + 10);
+            turtle.x = Math.min(boardWidth - turtle.width, turtle.x + 10);
         } else if (e.getKeyCode() == KeyEvent.VK_Z) {
             velocityY = -18;
         }
