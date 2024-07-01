@@ -112,13 +112,13 @@ class FlappyTurtle extends JPanel implements ActionListener, KeyListener {
 
         g.setFont(new Font("Arial", Font.PLAIN, 32));
         if (gameOver) {
-            g.drawString("Game Over : " + (int) score, 10, 35);
+            g.drawString("Game Over : " + (int) score, 10, 115);
             g.setFont(new Font("Arial", Font.PLAIN, 20));
-            g.drawString("Jump -> Space", 10, 70);
-            g.drawString("Super Jump -> Z", 10, 100);
-            g.drawString("Back -> Q", 10, 130);
-            g.drawString("Forward -> D", 10, 160);
-            g.drawString("Restart -> Space", 10, 190);
+            g.drawString("Jump -> Space", 10, 150);
+            g.drawString("Super Jump -> Z", 10, 180);
+            g.drawString("Back -> Q", 10, 210);
+            g.drawString("Forward -> D", 10, 240);
+            g.drawString("Restart -> Space", 10, 270);
         } else {
             g.drawString(String.valueOf((int) score), 10, 35);
         }
